@@ -50,6 +50,12 @@
   --color-html-orange: #f78a57;
   --color-html-gray: #8f8f8f;
   --color-blue-light: #057db7;
+  --color-html-event: #6f97d7;
+  --color-html-inspect: #5880a0;
+  --color-html-selected: #004a77;
+
+  --color-main: #fe4000;
+  --color-main-dark: #e54100;
 }
 
 :root {
@@ -122,6 +128,13 @@
 }
 
 @layer base {
+  .nunito {
+    font-weight: 400;
+    font-family: "Nunito", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+  }
+
   * {
     @apply border-border outline-ring/50;
   }
