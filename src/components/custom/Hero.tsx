@@ -7,6 +7,7 @@ import {
 import DomSimulator from "./DomSimulator";
 import { Button } from "../ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import { scrollTo } from "@/utils/functons";
 
 export default function Hero() {
   const [currentPosition, setCurrentPosition] = useState(50);
@@ -64,13 +65,18 @@ export default function Hero() {
             <Tooltip open={true}>
               <TooltipTrigger asChild>
                 <Button
+                  onClick={() => scrollTo("let-me-introduce-myself")}
                   className="rounded-full text-xs font-normal bg-main hover:bg-main-dark cursor-pointer"
                   size="lg"
                 >
                   Saiba mais <b className="-ml-1">sobre meu trabalho</b>
                 </Button>
               </TooltipTrigger>
-              <TooltipContent sideOffset={0} side="bottom">
+              <TooltipContent
+                sideOffset={0}
+                side="bottom"
+                className="rounded-full "
+              >
                 <p>...e por que não, sobre mim?</p>
               </TooltipContent>
             </Tooltip>

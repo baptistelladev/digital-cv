@@ -227,6 +227,22 @@ export default function DomSimulator({
                   <span className="text-html-orange">stylesheet</span>
                   <span className="text-html-tag">"&gt;</span>
                 </p>
+
+                <p className="pl-3">
+                  <span className="text-html-tag">&lt;</span>
+                  <span className="text-html-tag">link</span>
+
+                  <span className="text-html-attr"> rel</span>
+                  <span className="text-html-tag">="</span>
+                  <span className="text-html-orange">stylesheet</span>
+                  <span className="text-html-tag">"</span>
+                  <span className="text-html-attr"> href</span>
+                  <span className="text-html-tag">="</span>
+                  <span className="text-html-attr underline underline-offset-1">
+                    https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css
+                  </span>
+                  <span className="text-html-tag">"&gt;</span>
+                </p>
               </div>
 
               <p className="pl-2">
