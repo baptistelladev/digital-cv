@@ -1,4 +1,4 @@
-import { DotSquare, Ellipsis } from "lucide-react";
+import { Ellipsis } from "lucide-react";
 import React, { useState } from "react";
 
 interface IDomSimProps {
@@ -23,11 +23,34 @@ export default function DomSimulator({
     "Recorder",
   ];
 
-  const [selectedItemFromList, setSelectedItemFromList] =
-    useState<string>("Elements");
+  const rightList = ["Styles", "Computed", "Layout", "Event Listeners"];
+
+  const footerSelected = [
+    {
+      tag: "div",
+      aux: ".flex.items-center.justify-center.flex-col.h-full.w-full",
+    },
+    {
+      tag: "div",
+      aux: ".max-w-[200px].text-center.bg-html-inspect",
+    },
+    {
+      tag: "p",
+      aux: ".text-neutral-200.font-thin.text.sm",
+      is_selected: true,
+    },
+  ];
+
+  const [selectedItemFromList] = useState<string>("Elements");
+
+  const TagStyle = () => (
+    <p className="text-html-attr absolute top-0 right-0 text-[11px] w-auto">
+      {"<style>"}
+    </p>
+  );
 
   return (
-    <section className="what-you-see w-full h-full bg-dom-sim-gray-28 flex flex-col">
+    <section className="what-you-see w-full h-screen bg-dom-sim-gray-28 flex flex-col">
       <header className="h-[27px] w-full border-b border-b-dom-sim-gray-5e bg-dom-sim-gray-3c flex items-center justify-start">
         <div className="pl-3 pr-1">
           <img src="left-buttons-toolbar.png" alt="" className="h-[18px]" />
@@ -59,9 +82,9 @@ export default function DomSimulator({
         </div>
       </header>
 
-      <div className="flex items-start justify-start w-full flex-1 h-full">
-        <div className="flex-1 h-full flex items-center justify-start">
-          <code className="content w-full h-full p-4 py-1 font-mono text-[10px] relative">
+      <div className="flex items-start justify-start w-full flex-1 min-h-screen">
+        <div className="flex-1 h-[calc(100vh-25px)] flex items-start justify-start flex-col relative">
+          <code className="content w-full flex-1 p-4 py-1 font-mono text-[10px] relative">
             <div className="absolute top-4 right-4 rounded-full shadow  opacity-70 p-1.5 shadow-slate-950">
               <img src="accessibility.png" className="w-3.5 invert" alt="" />
             </div>
@@ -131,6 +154,28 @@ export default function DomSimulator({
                   <span className="text-html-attr"> charset</span>
                   <span className="text-html-tag">="</span>
                   <span className="text-html-orange">UTF-8</span>
+                  <span className="text-html-tag">"&gt;</span>
+                </p>
+
+                <p className="pl-3">
+                  <span className="text-html-tag">&lt;</span>
+                  <span className="text-html-tag">link</span>
+
+                  <span className="text-html-attr"> rel</span>
+                  <span className="text-html-tag">="</span>
+                  <span className="text-html-orange">icon</span>
+                  <span className="text-html-tag">"</span>
+
+                  <span className="text-html-attr"> type</span>
+                  <span className="text-html-tag">="</span>
+                  <span className="text-html-orange">image/svg+xml</span>
+                  <span className="text-html-tag">"</span>
+
+                  <span className="text-html-attr"> href</span>
+                  <span className="text-html-tag">="</span>
+                  <span className="text-html-attr underline underline-offset-1">
+                    /favicon.png
+                  </span>
                   <span className="text-html-tag">"&gt;</span>
                 </p>
 
@@ -843,6 +888,32 @@ export default function DomSimulator({
                 <span className="text-html-tag">&lt;/script&gt;</span>
               </p>
 
+              <p className="pl-6">
+                <span className="text-html-tag">&lt;</span>
+                <span className="text-html-tag">div</span>
+                <span className="text-html-attr">
+                  {" "}
+                  data-radix-popper-content-wrapper
+                </span>
+                <span className="text-html-tag">="</span>
+                <span className="text-html-orange">
+                  position: fixed; left: 0px; top: 0px; transform:
+                  translate(445.5px, 1137px); min-width: max-content;
+                  --radix-popper-transform-origin: 86.50000000000001px -10px;
+                  will-change: transform; z-index: 50;
+                  --radix-popper-available-width: 1064px;
+                  --radix-popper-available-height: 93px;
+                  --radix-popper-anchor-width: 229.9609375px;
+                  --radix-popper-anchor-height: 40px;
+                </span>
+
+                <span className="text-html-tag">"&gt;</span>
+                <span className="border border-blue-light rounded-xl mx-[.9px] inline w-4 h-3 text-white font-bold text-[7px]">
+                  ...
+                </span>
+                <span className="text-html-tag">&lt;/script&gt;</span>
+              </p>
+
               <p className="pl-3">
                 <span className="text-html-tag">&lt;/</span>
                 <span className="text-html-tag">body</span>
@@ -856,43 +927,626 @@ export default function DomSimulator({
               <span className="text-html-tag">&gt;</span>
             </p>
           </code>
+
+          <footer className="h-[22px] w-full border-t border-t-dom-sim-gray-5e bg-dom-sim-gray-28 flex items-center justify-start">
+            <div className="flex items-center justify-center w-[24px] border border-dom-sim-gray-5e h-[22px]">
+              <img
+                src="arrow-console.png"
+                alt=""
+                className="size-1.5 opacity-50"
+              />
+            </div>
+            <div className="flex-1 flex items-end justify-start h-full">
+              <ul className="flex items-end justify-start h-full">
+                {footerSelected.map((item, index) => (
+                  <React.Fragment key={item.tag + index}>
+                    <li
+                      className={`relative  font-normal text-[12px] px-2 h-full flex items-center justify-start whitespace-nowrap before:content[" "] before:absolute before:left-0 before:right-0  before:w-full before:h-full before:bg-none before:z-10 before:rounded-none ${
+                        item.is_selected && "before:bg-html-selected"
+                      } `}
+                    >
+                      {item.tag && (
+                        <span className="relative z-20 text-html-tag">
+                          {item.tag}
+                        </span>
+                      )}
+                      {item.aux && (
+                        <span className="relative z-20 text-html-attr">
+                          {item.aux}
+                        </span>
+                      )}
+                    </li>
+                  </React.Fragment>
+                ))}
+              </ul>
+            </div>
+            <div className="flex items-center justify-center w-[24px] border border-dom-sim-gray-5e h-[22px]">
+              <img
+                src="arrow-console.png"
+                alt=""
+                className="size-1.5 opacity-50"
+              />
+            </div>
+          </footer>
         </div>
 
         <div className="w-[300px] h-full border-l border-l-dom-sim-gray-5e ">
-          dada
+          <header className="h-[27px] w-full border-b border-b-dom-sim-gray-5e bg-dom-sim-gray-3c flex items-center justify-start">
+            <div className="flex-1 flex items-end justify-start h-full">
+              <ul className="flex items-end justify-start h-full">
+                {rightList.map((item) => (
+                  <React.Fragment key={item}>
+                    <li
+                      className={`relative text-dom-sim-gray-c7 font-normal text-[12px] px-2 h-full flex items-center justify-start whitespace-nowrap before:content[" "] before:absolute before:bottom-0 before:left-0 before:w-full before:h-[2.1px] before:rounded-t-lg before:bg-none ${
+                        selectedItemFromList === item &&
+                        "text-dom-sim-purple-light before:bg-dom-sim-purple-light"
+                      } is-active:text-red-100`}
+                    >
+                      {item}
+                    </li>
+                  </React.Fragment>
+                ))}
+              </ul>
+            </div>
+          </header>
+
+          <div className="w-full flex flex-col justify-start items-start">
+            <div className="border-b border-b-dom-sim-gray-5e w-full">
+              <div className="w-full flex pt-[3px] pb-[3px] pl-1.5 pr-3 items-center">
+                <div className="flex-1">
+                  <div className="input-sim text-dom-sim-gray-c7 text-[12px] bg-dom-sim-gray-3c flex items-center gap-1.5 rounded-full pl-2.5 min-h-[21px]">
+                    <img src="funil.png" className="h-[11.5px]"></img> Filter
+                  </div>
+                </div>
+
+                <img src="labels.png" className="h-[19px] ml-1.5"></img>
+
+                <code className="flex gap-2 ml-1 tracking-tighter">
+                  <p className="text-[10px] text-dom-sim-gray-c7">:hov</p>
+                  <p className="text-[10px] text-dom-sim-gray-c7">.cls</p>
+                </code>
+
+                <img src="right-buttons.png" className="h-[21px] ml-2.5"></img>
+              </div>
+            </div>
+
+            <div className="border-b border-b-dom-sim-gray-5e w-full">
+              <div className="w-full flex pt-[3px] pb-[3px] pl-1.5 pr-3 items-center">
+                <code>
+                  <p className="text-[10.5px]">
+                    <span className="text-html-gray">
+                      element.style <span className=" text-white">{"{"}</span>
+                    </span>
+                  </p>
+                  <p className="text-[10.5px]">
+                    <span>
+                      <span className=" text-white">{"}"}</span>
+                    </span>
+                  </p>
+                </code>
+              </div>
+            </div>
+
+            <div className="border-b border-b-dom-sim-gray-5e w-full bg-css-bar">
+              <div className="w-full flex pt-[3px] pb-[3px] pl-1.5 pr-3 items-center">
+                <p className="text-dom-sim-gray-c7 font-normal text-[12px]">
+                  Layer{" "}
+                  <span className="underline text-dom-sim-purple-light">
+                    utilities
+                  </span>
+                </p>
+              </div>
+            </div>
+
+            <div className="border-b border-b-dom-sim-gray-5e w-full">
+              <div className="w-full flex pt-[3px] pb-[3px] pl-1.5 pr-3 items-center">
+                <code className="relative w-full">
+                  <TagStyle />
+                  <p className="text-[10.5px]">
+                    <span className="text-white">.text-neutral-200 {" {"}</span>
+                  </p>
+                  <p className="text-[10.5px] pl-5">
+                    <span className="text-css-prop">color</span>
+                    <span className="text-white">:</span>
+                    <span className="bg-neutral-200 size-[9px] aspect-square inline-block border border-html-gray ml-2 mr-1"></span>
+                    <span className="text-white underline decoration-dotted">
+                      var
+                    </span>
+                    <span className="text-white ">(</span>
+                    <span className="text-html-attr">--color-neutral-200</span>
+                    <span className="text-white">);</span>
+                  </p>
+                  <p className="text-[10.5px]">
+                    <span>
+                      <span className=" text-white">{"}"}</span>
+                    </span>
+                  </p>
+                </code>
+              </div>
+            </div>
+
+            <div className="border-b border-b-dom-sim-gray-5e w-full bg-css-bar">
+              <div className="w-full flex pt-[3px] pb-[3px] pl-1.5 pr-3 items-center">
+                <p className="text-dom-sim-gray-c7 font-normal text-[12px]">
+                  Layer{" "}
+                  <span className="underline text-dom-sim-purple-light">
+                    utilities
+                  </span>
+                </p>
+              </div>
+            </div>
+
+            <div className="border-b border-b-dom-sim-gray-5e w-full">
+              <div className="w-full flex pt-[3px] pb-[3px] pl-1.5 pr-3 items-center">
+                <code className="relative w-full">
+                  <TagStyle />
+                  <p className="text-[10.5px]">
+                    <span className="text-white">.font-thin {" {"}</span>
+                  </p>
+                  <p className="text-[10.5px] pl-5">
+                    <span className="text-css-prop">--tw-font-weight</span>
+                    <span className="text-white">:</span>
+                    <span className="text-white underline decoration-dotted ml-2">
+                      var
+                    </span>
+                    <span className="text-white ">(</span>
+                    <span className="text-html-attr">--font-weight-thin</span>
+                    <span className="text-white">);</span>
+                  </p>
+                  <p className="text-[10.5px] pl-5">
+                    <span className="text-css-prop">font-weight</span>
+                    <span className="text-white">:</span>
+                    <span className="text-white underline decoration-dotted ml-2">
+                      var
+                    </span>
+                    <span className="text-white ">(</span>
+                    <span className="text-html-attr">--font-weight-thin</span>
+                    <span className="text-white">);</span>
+                  </p>
+                  <p className="text-[10.5px]">
+                    <span>
+                      <span className=" text-white">{"}"}</span>
+                    </span>
+                  </p>
+                </code>
+              </div>
+            </div>
+
+            <div className="border-b border-b-dom-sim-gray-5e w-full bg-css-bar">
+              <div className="w-full flex pt-[3px] pb-[3px] pl-1.5 pr-3 items-center">
+                <p className="text-dom-sim-gray-c7 font-normal text-[12px]">
+                  Layer{" "}
+                  <span className="underline text-dom-sim-purple-light">
+                    utilities
+                  </span>
+                </p>
+              </div>
+            </div>
+
+            <div className="border-b border-b-dom-sim-gray-5e w-full">
+              <div className="w-full flex pt-[3px] pb-[3px] pl-1.5 pr-3 items-center">
+                <code className="relative w-full">
+                  <TagStyle />
+                  <p className="text-[10.5px]">
+                    <span className="text-white">.text-sm {" {"}</span>
+                  </p>
+                  <p className="text-[10.5px] pl-5">
+                    <span className="text-css-prop">font-size</span>
+                    <span className="text-white">:</span>
+                    <span className="text-white underline decoration-dotted ml-2">
+                      var
+                    </span>
+                    <span className="text-white ">(</span>
+                    <span className="text-html-attr">--text-sm</span>
+                    <span className="text-white">);</span>
+                  </p>
+                  <p className="text-[10.5px] pl-5">
+                    <span className="text-css-prop">line-height</span>
+                    <span className="text-white">:</span>
+                    <span className="text-white underline decoration-dotted ml-2">
+                      var(
+                    </span>
+                    <span className="text-html-gray">--tw,leading</span>
+                    <span className="text-white">, var(</span>
+                    <span className="text-html-attr">
+                      --text-sm--line-height
+                    </span>
+                    <span className="text-white">)</span>
+                    <span className="text-white">);</span>
+                  </p>
+                  <p className="text-[10.5px]">
+                    <span>
+                      <span className=" text-white">{"}"}</span>
+                    </span>
+                  </p>
+                </code>
+              </div>
+            </div>
+
+            <div className="border-b border-b-dom-sim-gray-5e w-full bg-css-bar">
+              <div className="w-full flex pt-[3px] pb-[3px] pl-1.5 pr-3 items-center">
+                <p className="text-dom-sim-gray-c7 font-normal text-[12px]">
+                  Layer{" "}
+                  <span className="underline text-dom-sim-purple-light">
+                    base
+                  </span>
+                </p>
+              </div>
+            </div>
+
+            <div className="border-b border-b-dom-sim-gray-5e w-full">
+              <div className="w-full flex pt-[3px] pb-[3px] pl-1.5 pr-3 items-center">
+                <code className="relative w-full">
+                  <TagStyle />
+                  <p className="text-[10.5px]">
+                    <span className="text-html-gray">* {"{"}</span>
+                  </p>
+                  <p className="text-[10.5px]">
+                    <span className="text-html-gray pl-1">
+                      @supports{" "}
+                      <span className="text-white pl-1">
+                        (color: color-mix(in lab, red, red))
+                      </span>{" "}
+                      {"{"}
+                    </span>
+                  </p>
+
+                  <p className="text-[10.5px] pl-5">
+                    <span className="text-css-prop">outline-color</span>
+                    <span className="text-white">:</span>
+                    <span className="text-white ml-2">
+                      color-mix(in oaklab,
+                    </span>
+                    <span className="bg-ring size-[9px] aspect-square inline-block border border-html-gray ml-2 mr-1"></span>
+                    <span className="text-white underline decoration-dotted">
+                      var
+                    </span>
+                    <span className="text-white ">(</span>
+                    <span className="text-html-attr">--ring</span>
+                    <span className="text-white">) 50%, transparent);</span>
+                  </p>
+                  <p className="text-[10.5px]">
+                    <span className="text-html-gray pl-1">{"}"}</span>
+                  </p>
+                  <p className="text-[10.5px]">
+                    <span className="text-html-gray">{"}"}</span>
+                  </p>
+                </code>
+              </div>
+            </div>
+
+            <div className="border-b border-b-dom-sim-gray-5e w-full bg-css-bar">
+              <div className="w-full flex pt-[3px] pb-[3px] pl-1.5 pr-3 items-center">
+                <p className="text-dom-sim-gray-c7 font-normal text-[12px]">
+                  Layer{" "}
+                  <span className="underline text-dom-sim-purple-light">
+                    base
+                  </span>
+                </p>
+              </div>
+            </div>
+
+            <div className="border-b border-b-dom-sim-gray-5e w-full">
+              <div className="w-full flex pt-[3px] pb-[3px] pl-1.5 pr-3 items-center">
+                <code className="relative w-full">
+                  <TagStyle />
+                  <p className="text-[10.5px]">
+                    <span className="text-white">* {"{"}</span>
+                  </p>
+                  <p className="text-[10.5px] pl-5">
+                    <span className="text-css-prop">border-color</span>
+                    <span className="text-white">:</span>
+                    <span>
+                      <img
+                        src="arrow-console.png"
+                        alt=""
+                        className="inline-block w-[9px] ml-1"
+                      />
+                    </span>
+                    <span className="bg-border size-[9px] aspect-square inline-block border border-html-gray ml-1 mr-1"></span>
+                    <span className="text-white underline decoration-dotted">
+                      var
+                    </span>
+                    <span className="text-white ">(</span>
+                    <span className="text-html-attr">--border</span>
+                    <span className="text-white">);</span>
+                  </p>
+                  <p className="text-[10.5px] pl-5 line-through text-white">
+                    <span className="text-css-prop">outline-color</span>
+                    <span className="text-white">:</span>
+                    <span className="bg-ring size-[9px] aspect-square inline-block border border-html-gray ml-2 mr-1"></span>
+                    <span className="text-white underline decoration-dotted">
+                      var
+                    </span>
+                    <span className="text-white ">(</span>
+                    <span className="text-html-attr">--ring</span>
+                    <span className="text-white">);</span>
+                  </p>
+                  <p className="text-[10.5px]">
+                    <span className="text-white">{"}"}</span>
+                  </p>
+                </code>
+              </div>
+            </div>
+
+            <div className="border-b border-b-dom-sim-gray-5e w-full bg-css-bar">
+              <div className="w-full flex pt-[3px] pb-[3px] pl-1.5 pr-3 items-center">
+                <p className="text-dom-sim-gray-c7 font-normal text-[12px]">
+                  Layer{" "}
+                  <span className="underline text-dom-sim-purple-light">
+                    base
+                  </span>
+                </p>
+              </div>
+            </div>
+
+            <div className="border-b border-b-dom-sim-gray-5e w-full">
+              <div className="w-full flex pt-[3px] pb-[3px] pl-1.5 pr-3 items-center">
+                <code className="relative w-full">
+                  <TagStyle />
+                  <p className="text-[10.5px] pr-10">
+                    <span className="text-white">
+                      *,{" "}
+                      <span className="text-html-gray">
+                        , ::after, ::before, ::backdrop, ::file-selector-button{" "}
+                      </span>{" "}
+                      {"{"}
+                    </span>
+                  </p>
+                  <p className="text-[10.5px] pl-5">
+                    <span className="text-css-prop">box-sizing</span>
+                    <span className="text-white">:</span>
+                    <span className="text-white ml-2">border-box;</span>
+                  </p>
+                  <p className="text-[10.5px] pl-5">
+                    <span className="text-css-prop">margin</span>
+                    <span className="text-white">:</span>
+                    <span>
+                      <img
+                        src="arrow-console.png"
+                        alt=""
+                        className="inline-block w-[9px] ml-1"
+                      />
+                    </span>
+                    <span className="text-white ml-1">0;</span>
+                  </p>
+                  <p className="text-[10.5px] pl-5">
+                    <span className="text-css-prop">padding</span>
+                    <span className="text-white">:</span>
+                    <span>
+                      <img
+                        src="arrow-console.png"
+                        alt=""
+                        className="inline-block w-[9px] ml-1"
+                      />
+                    </span>
+                    <span className="text-white ml-1">0;</span>
+                  </p>
+                  <p className="text-[10.5px] pl-5">
+                    <span className="text-css-prop">border</span>
+                    <span className="text-white">:</span>
+                    <span>
+                      <img
+                        src="arrow-console.png"
+                        alt=""
+                        className="inline-block w-[9px] ml-1"
+                      />
+                    </span>
+                    <span className="text-white ml-1">0 solid;</span>
+                  </p>
+                  <p className="text-[10.5px]">
+                    <span className="text-white">{"}"}</span>
+                  </p>
+                </code>
+              </div>
+            </div>
+
+            <div className="border-b border-b-dom-sim-gray-5e w-full bg-css-bar">
+              <div className="w-full flex pt-[3px] pb-[3px] pl-1.5 pr-3 items-center">
+                <p className="text-dom-sim-gray-c7 font-normal text-[12px]">
+                  Layer user agent stylesheet
+                </p>
+              </div>
+            </div>
+
+            <div className="border-b border-b-dom-sim-gray-5e w-full">
+              <div className="w-full flex pt-[3px] pb-[3px] pl-1.5 pr-3 items-center">
+                <code className="italic relative w-full">
+                  <p className="text-dom-sim-gray-c7 absolute top-0 right-0 text-[11px] w-auto">
+                    {"user agent stylesheet"}
+                  </p>
+                  <p className="text-[10.5px]">
+                    <span className="text-white">p {"{"}</span>
+                  </p>
+                  <p className="text-[10.5px] pl-5">
+                    <span className="text-css-prop">display</span>
+                    <span className="text-white">:</span>
+                    <span className="text-white ml-2">block;</span>
+                  </p>
+                  <p className="text-[10.5px] pl-5">
+                    <span className="text-css-prop">margin-block-start</span>
+                    <span className="text-white">:</span>
+                    <span className="text-white ml-2">1em;</span>
+                  </p>
+                  <p className="text-[10.5px] pl-5">
+                    <span className="text-css-prop">margin-block-end</span>
+                    <span className="text-white">:</span>
+                    <span className="text-white ml-2">1em;</span>
+                  </p>
+                  <p className="text-[10.5px] pl-5">
+                    <span className="text-css-prop">margin-inline-start</span>
+                    <span className="text-white">:</span>
+                    <span className="text-white ml-2">0px;</span>
+                  </p>
+                  <p className="text-[10.5px] pl-5">
+                    <span className="text-css-prop">margin-inline-end</span>
+                    <span className="text-white">:</span>
+                    <span className="text-white ml-2">0px;</span>
+                  </p>
+                  <p className="text-[10.5px] pl-5">
+                    <span className="text-css-prop">unicode-bidi</span>
+                    <span className="text-white">:</span>
+                    <span className="text-white ml-2">isolate;</span>
+                  </p>
+                  <p className="text-[10.5px]">
+                    <span className="text-white">{"}"}</span>
+                  </p>
+                </code>
+              </div>
+            </div>
+
+            <div className="border-b border-b-dom-sim-gray-5e w-full bg-css-bar">
+              <div className="w-full flex pt-[3px] pb-[3px] pl-1.5 pr-3 items-center">
+                <p className="text-dom-sim-gray-c7 font-normal text-[12px]">
+                  Inherited from ...
+                </p>
+              </div>
+            </div>
+
+            <div className="border-b border-b-dom-sim-gray-5e w-full bg-css-bar">
+              <div className="w-full flex pt-[3px] pb-[3px] pl-1.5 pr-3 items-center">
+                <p className="text-dom-sim-gray-c7 font-normal text-[12px]">
+                  Layer{" "}
+                  <span className="underline text-dom-sim-purple-light">
+                    utilities
+                  </span>
+                </p>
+              </div>
+            </div>
+
+            <div className="border-b border-b-dom-sim-gray-5e w-full">
+              <div className="w-full flex pt-[3px] pb-[3px] pl-1.5 pr-3 items-center">
+                <code className="relative w-full">
+                  <TagStyle />
+                  <p className="text-[10.5px]">
+                    <span className="text-white">.text-center {" {"}</span>
+                  </p>
+                  <p className="text-[10.5px] pl-5">
+                    <span className="text-css-prop">text-align</span>
+                    <span className="text-white">:</span>
+                    <span className="text-white ml-2">center;</span>
+                  </p>
+                  <p className="text-[10.5px]">
+                    <span>
+                      <span className=" text-white">{"}"}</span>
+                    </span>
+                  </p>
+                </code>
+              </div>
+            </div>
+
+            <div className="border-b border-b-dom-sim-gray-5e w-full bg-css-bar">
+              <div className="w-full flex pt-[3px] pb-[3px] pl-1.5 pr-3 items-center">
+                <p className="text-dom-sim-gray-c7 font-normal text-[12px]">
+                  Inherited from ...
+                </p>
+              </div>
+            </div>
+
+            <div className="border-b border-b-dom-sim-gray-5e w-full bg-css-bar">
+              <div className="w-full flex pt-[3px] pb-[3px] pl-1.5 pr-3 items-center">
+                <p className="text-dom-sim-gray-c7 font-normal text-[12px]">
+                  Layer{" "}
+                  <span className="underline text-dom-sim-purple-light">
+                    utilities
+                  </span>
+                </p>
+              </div>
+            </div>
+
+            <div className="border-b border-b-dom-sim-gray-5e w-full">
+              <div className="w-full flex pt-[3px] pb-[3px] pl-1.5 pr-3 items-center">
+                <code className="relative w-full">
+                  <TagStyle />
+                  <p className="text-[10.5px]">
+                    <span className="text-white">.select-none {" {"}</span>
+                  </p>
+                  <p className="text-[10.5px] pl-5 text-white line-through">
+                    <span className="text-css-prop">-webkit-user-select</span>
+                    <span className="text-white">:</span>
+                    <span className="text-white pl-2">none;</span>
+                  </p>
+                  <p className="text-[10.5px] pl-5">
+                    <span className="text-html-gray">-moz-user-selected</span>
+                    <span className="text-html-gray">:</span>
+                    <span className="text-html-gray ml-2 line-through">
+                      none
+                    </span>
+                    <span className="text-html-gray line-through">;</span>
+                  </p>
+                  <p className="text-[10.5px] pl-5">
+                    <span className="text-css-prop">user-select</span>
+                    <span className="text-white">:</span>
+                    <span className="text-white ml-2">none;</span>
+                  </p>
+                  <p className="text-[10.5px]">
+                    <span>
+                      <span className=" text-white">{"}"}</span>
+                    </span>
+                  </p>
+                </code>
+              </div>
+            </div>
+
+            <div className="border-b border-b-dom-sim-gray-5e w-full bg-css-bar">
+              <div className="w-full flex pt-[3px] pb-[3px] pl-1.5 pr-3 items-center">
+                <p className="text-dom-sim-gray-c7 font-normal text-[12px]">
+                  Inherited from <span className=" text-html-tag">body</span>
+                </p>
+              </div>
+            </div>
+
+            <div className="border-b border-b-dom-sim-gray-5e w-full bg-css-bar">
+              <div className="w-full flex pt-[3px] pb-[3px] pl-1.5 pr-3 items-center">
+                <p className="text-dom-sim-gray-c7 font-normal text-[12px]">
+                  Layer{" "}
+                  <span className="underline text-dom-sim-purple-light">
+                    base
+                  </span>
+                </p>
+              </div>
+            </div>
+
+            <div className="border-b border-b-dom-sim-gray-5e w-full">
+              <div className="w-full flex pt-[3px] pb-[3px] pl-1.5 pr-3 items-center">
+                <code className="relative w-full">
+                  <TagStyle />
+                  <p className="text-[10.5px]">
+                    <span className="text-white">.body {" {"}</span>
+                  </p>
+                  <p className="text-[10.5px] pl-5 opacity-50">
+                    <span className="text-css-prop">background-color</span>
+                    <span className="text-white">:</span>
+                    <span className="bg-background size-[9px] aspect-square inline-block border border-html-gray ml-2 mr-1"></span>
+                    <span className="text-white underline decoration-dotted">
+                      var
+                    </span>
+                    <span className="text-white ">(</span>
+                    <span className="text-html-attr">--background</span>
+                    <span className="text-white">);</span>
+                  </p>
+                  <p className="text-[10.5px] pl-5 text-white line-through">
+                    <span className="text-css-prop">color</span>
+                    <span className="text-white">:</span>
+                    <span className="bg-foreground size-[9px] aspect-square inline-block border border-html-gray ml-2 mr-1"></span>
+                    <span className="text-white underline decoration-dotted">
+                      var
+                    </span>
+                    <span className="text-white ">(</span>
+                    <span className="text-html-attr">--foreground</span>
+                    <span className="text-white">);</span>
+                  </p>
+                  <p className="text-[10.5px]">
+                    <span>
+                      <span className=" text-white">{"}"}</span>
+                    </span>
+                  </p>
+                </code>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
-      <footer className="h-[22px] w-full border-t border-t-dom-sim-gray-5e bg-dom-sim-gray-28 flex items-center justify-start">
-        <div className="pl-3 pr-1">
-          <img src="left-buttons-toolbar.png" alt="" className="h-[18px]" />
-        </div>
-
-        <span className="w-[.7px] bg-dom-sim-gray-5e mx-1 h-[60%]"></span>
-
-        <div className="flex-1 flex items-end justify-start h-full">
-          <ul className="flex items-end justify-start h-full">
-            {list.map((item) => (
-              <React.Fragment key={item}>
-                <li
-                  className={`relative text-dom-sim-gray-c7 font-normal text-[12px] px-2 h-full flex items-center justify-start whitespace-nowrap before:content[" "] before:absolute before:bottom-0 before:left-0 before:w-full before:h-[2.1px] before:rounded-t-lg before:bg-none ${
-                    selectedItemFromList === item &&
-                    "text-dom-sim-purple-light before:bg-dom-sim-purple-light"
-                  } is-active:text-red-100`}
-                >
-                  {item}
-                </li>
-              </React.Fragment>
-            ))}
-          </ul>
-        </div>
-
-        <span className="w-[.7px] bg-dom-sim-gray-5e mx-1 h-[60%]"></span>
-
-        <div className="pl-1 pr-3">
-          <img src="right-buttons-toolbar.png" alt="" className="h-[23px]" />
-        </div>
-      </footer>
     </section>
   );
 }

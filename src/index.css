@@ -56,6 +56,9 @@
 
   --color-main: #fe4000;
   --color-main-dark: #e54100;
+
+  --color-css-bar: #2e2f31;
+  --color-css-prop: #5dd7fd;
 }
 
 :root {

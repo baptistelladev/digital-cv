@@ -9,7 +9,7 @@ export default function SkillToolComp({ skill }: SkillToolProps) {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <div className="hover:opacity-50 transition-opacity duration-300 p-2 flex items-center justify-center relative">
+        <div className="hover:opacity-50 transition-all duration-300 px-2 flex items-center justify-center relative hover:scale-110 hover:-rotate-10">
           <img
             src={`https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${skill.logo}`}
             className={`${skill.cssMaxWidth ? skill.cssMaxWidth : "max-w-8"}`}

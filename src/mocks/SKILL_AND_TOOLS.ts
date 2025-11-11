@@ -102,7 +102,7 @@ export const SKILL_AND_TOOLS_USED_BY_CONSEQUENCE: SkillTool[] = [
     logo: "gitlab/gitlab-original-wordmark.svg",
   },
   {
-    text: "Github Actions",
+    text: "GitHub Actions",
     logo: "githubactions/githubactions-original-wordmark.svg",
   },
   {
@@ -129,12 +129,12 @@ export const SKILL_AND_TOOLS_USED_BY_CONSEQUENCE: SkillTool[] = [
 
 export const SKILL_AND_TOOLS_GETTING_BETTER: SkillTool[] = [
   {
-    text: "NextJS",
+    text: "Next.js",
     logo: "nextjs/nextjs-original-wordmark.svg",
     cssMaxWidth: "max-w-[40px]",
   },
   {
-    text: "Tailwind",
+    text: "Tailwind CSS",
     logo: "tailwindcss/tailwindcss-plain-wordmark.svg",
     cssMaxWidth: "max-w-[50px]",
   },
@@ -145,10 +145,6 @@ export const SKILL_AND_TOOLS_GETTING_BETTER: SkillTool[] = [
   {
     text: "Zustand",
     logo: "zustand/zustand-original.svg",
-  },
-  {
-    text: "Zustand",
-    logo: "zend/zend-original-wordmark.svg",
   },
   {
     text: "ViteJS",
@@ -190,11 +186,11 @@ export const SKILL_AND_TOOLS_LESS_EXPERIENCE_BUT_CAN_WORK: SkillTool[] = [
     cssMaxWidth: "max-w-[50px]",
   },
   {
-    text: "Jarmine",
+    text: "Jasmine",
     logo: "jasmine/jasmine-original-wordmark.svg",
   },
   {
-    text: "Jarmine",
+    text: "Karma",
     logo: "karma/karma-original.svg",
   },
   {
@@ -212,7 +208,7 @@ export const SKILL_AND_TOOLS_LESS_EXPERIENCE_BUT_CAN_WORK: SkillTool[] = [
 
 export const SKILL_AND_TOOLS_HAS_NOTION: SkillTool[] = [
   {
-    text: "Styled Components",
+    text: "PostgreeSQL",
     logo: "postgresql/postgresql-original-wordmark.svg",
   },
   {

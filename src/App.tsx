@@ -1,4 +1,5 @@
 import {
+  ChevronUp,
   CircleDollarSign,
   Download,
   ExternalLink,
@@ -14,7 +15,6 @@ import { Button } from "./components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/tabs";
 import {
   Tooltip,
-  TooltipContent,
   TooltipContent2,
   TooltipTrigger,
 } from "./components/ui/tooltip";
@@ -31,7 +31,16 @@ import {
 } from "./mocks/SKILL_AND_TOOLS";
 import { SOCIALS } from "./mocks/SOCIALS";
 import type { SkillTool } from "./types/SkillTool";
-import { callOnWhatsApp } from "./utils/functons";
+import { callOnWhatsApp, scrollTo } from "./utils/functons";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./components/ui/dialog";
 
 function App() {
   {
@@ -62,7 +71,7 @@ function App() {
             <b className="font-bold ml-1">Desenvolvedor Front-end</b>,
             principalmente <b className="font-bold">Angular</b>. Tenho dado
             prioridade para vagas com modelo remoto, visto que moro no litoral
-            de São Paulo.
+            de São Paulo, mas não descarto outros modelos.
           </p>,
           <p className="font-light text-neutral-800 text-xs indent-6">
             Falando sobre remoto, nem sempre foi assim. Durante muito tempo
@@ -76,7 +85,9 @@ function App() {
             aproximadamente 5 anos em aplicações multi-plataforma. Atuei na
             Bradesco Seguros em projetos legados e outros mais recentes,
             realizando sustentação, refatoração, e desenvolvimento de novas
-            funcionalidades.
+            funcionalidades, incluindo: componentes, telas inteiras,
+            autenticação com jwt, gerenciamento de estado entre outras
+            atividades.
           </p>,
           <p className="font-light text-neutral-800 text-xs indent-6">
             Além disso, integrei uma squad em Portugal, contribuindo para o
@@ -167,13 +178,20 @@ function App() {
       case "RECRUITER":
         return (
           <div className="w-full flex items-center justify-end pt-4">
-            <Button
-              variant={"link"}
-              className="font-normal text-xs bg-transparent rounded-full cursor-pointer hover:bg-transparent hover:text-main-dark text-main underline"
-              size="sm"
-            >
-              Baixar currículo <Download />
-            </Button>
+            <Dialog>
+              <DialogTrigger>
+                <Button
+                  variant={"link"}
+                  className="font-normal text-xs bg-transparent rounded-full cursor-pointer hover:bg-transparent hover:text-main-dark text-main underline"
+                  size="sm"
+                >
+                  Baixar currículo <Download />
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <Alert />
+              </DialogContent>
+            </Dialog>
 
             <Tooltip>
               <TooltipTrigger asChild>
@@ -254,7 +272,7 @@ function App() {
         {title}
       </p>
 
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(0,1fr))] md:grid-cols-12">
+      <div className="grid grid-cols-7 sm:grid-cols-8 md:grid-cols-12">
         {skillNtools.map((skill) => (
           <SkillToolComp skill={skill} />
         ))}
@@ -274,6 +292,28 @@ function App() {
     </span>
   );
 
+  const Alert = () => (
+    <DialogContent>
+      <DialogHeader>
+        <DialogTitle>Baixar currículo</DialogTitle>
+        <DialogDescription>
+          Disponibilizo uma versão .pdf e mais formal para você recrutador
+          anexar ao processo de seleção.
+        </DialogDescription>
+      </DialogHeader>
+
+      <div className="w-full flex gap-3">
+        <DialogClose>
+          <a href="cv-fbv-front-end.pdf" download>
+            <Button className="text-xs font-normal bg-main text-white shadow-none cursor-pointer">
+              Baixar versão .PDF
+            </Button>
+          </a>
+        </DialogClose>
+      </div>
+    </DialogContent>
+  );
+
   return (
     <section className="min-h-screen">
       <Hero />
@@ -291,26 +331,18 @@ function App() {
 
             <p className="text-neutral-400 font-thin text-xs md:text-sm">
               mas se você estiver com pressa{" "}
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <a
-                    href="#"
-                    className="text-main underline underline-offset-2 font-normal inline-flex gap-1 transition-colors hover:text-main-dark"
+              <Dialog>
+                <DialogTrigger>
+                  <Button
+                    variant={"link"}
+                    className="h-auto min-h-0 px-0! ml-1 md:ml-[0.7px] w-auto min-w-0 font-normal text-xs md:text-[14px] bg-transparent rounded-full cursor-pointer hover:bg-transparent hover:text-main-dark text-main underline"
+                    size="sm"
                   >
-                    faça download do meu currículo{" "}
-                    <Download strokeWidth={1.2} size={18} />
-                  </a>
-                </TooltipTrigger>
-                <TooltipContent
-                  sideOffset={0}
-                  side="bottom"
-                  className="rounded-full "
-                >
-                  <p>
-                    Clique para baixar <b>cv-felipe-b-vieira.pdf</b>
-                  </p>
-                </TooltipContent>
-              </Tooltip>
+                    faça download do curriculo <Download />
+                  </Button>
+                </DialogTrigger>
+                <Alert />
+              </Dialog>
             </p>
           </div>
         </div>
@@ -385,12 +417,12 @@ function App() {
       {/* TABS */}
       <section className="w-full">
         <Tabs defaultValue={TABS.defaultValue} className="w-full ">
-          <div className="flex w-full max-w-3xl m-auto  px-6 gap-6 flex-col items-center justify-start sm:flex-row sm:items-center sm:justify-between">
-            <TabsList className="rounded-full p-1 bg-transparent gap-3">
+          <div className="flex w-full max-w-3xl m-auto  px-6 gap-6 flex-col items-center justify-start sm:flex-row sm:items-center sm:justify-between sticky top-0 bg-linear-to-b from-white to-transparent">
+            <TabsList className="rounded-full p-1 ">
               {TABS.buttons.map((btn) => (
                 <TabsTrigger
                   value={btn.value}
-                  className="nunito group rounded-full text-sm md:text-[16px] font-bold  border-none p-0 min-h-0 h-auto before:hidden after:hidden shadow-none! border cursor-pointer hover:data-[state=active]:opacity-100 hover:opacity-50"
+                  className="nunito group rounded-full text-sm font-semibold text-neutral-600  cursor-pointer hover:data-[state=active]:opacity-100 hover:opacity-50"
                 >
                   <span className="group-data-[state=active]:text-main ">
                     {btn.text}
@@ -399,7 +431,7 @@ function App() {
               ))}
             </TabsList>
 
-            <div className="flex flex-col">
+            <div className="hidden md:flex">
               <LookingForJobNow />
             </div>
           </div>
@@ -419,7 +451,7 @@ function App() {
       </section>
 
       {/* CV */}
-      <section className="w-full pb-10 flex flex-col gap-8">
+      <section className="w-full  flex flex-col gap-8">
         {/* EXPERIÊNCIAS */}
         <div className="w-full m-auto max-w-3xl px-6 ">
           <SectionTitle title="Experiências relevantes" />
@@ -508,10 +540,12 @@ function App() {
           <SectionTitle title="Idiomas" />
 
           <div className="leading-3 space-y-2">
-            <p className="font-normal text-sm flex gap-1 flex-wrap items-center">
-              Inglês
+            <p className="font-normal text-sm flex gap-1 flex-wrap items-center justify-start">
+              <span>Inglês</span>
               <span className="text-muted-foreground">&middot;</span>
-              <span className="text-muted-foreground font-light">técnico</span>
+              <span className="font-light uppercase  text-white bg-neutral-600 rounded-full h-3.5 text-[8px] px-1 flex items-center justify-center m-0">
+                técnico
+              </span>
             </p>
             <p className="font-light text-neutral-800 text-xs">
               Apesar de ter feito mais de 4 anos de curso, nunca apliquei em
@@ -526,10 +560,119 @@ function App() {
         <div className="w-full m-auto max-w-3xl px-6 flex flex-col">
           <SectionTitle title="últimos trabalhos" />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 m-0">
+          <div className="leading-3 space-y-2 mb-4">
+            <p className="font-light text-neutral-800 text-xs">
+              A maior parte dos projetos que atuei estão em repositórios
+              privados pois são propriedade das empresas, separei abaixo alguns
+              projetos: um em que utilizei para treinar novas features do
+              angular, um projeto pessoal o qual mantenho e um freelancer.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 m-0 relative z-20">
             {LAST_WORKS.map((work) => (
               <LastWorkCardComp work={work} />
             ))}
+          </div>
+        </div>
+
+        <div className="w-full relative flex flex-col-reverse">
+          <div className="pl-6 pb-6 w-full flex flex-col justify-center items-center md:hidden">
+            <p className="font-thin text-sm neutral-600 md:hidden text-center">
+              &copy; 2025 - Felipe Baptistella Vieira.
+            </p>
+
+            <Button
+              onClick={() => scrollTo("let-me-introduce-myself")}
+              className="text-main text-[11px] font-normal underline cursor-pointer hover:text-main-dark  min-h-0 h-auto m-auto!"
+              variant={"link"}
+            >
+              Voltar para o topo <ChevronUp className="-ml-1" />
+            </Button>
+          </div>
+
+          <img
+            src="atleta.png"
+            className="absolute right-0 md:top-0 md:w-[70vw] md:max-w-[800px] xl:max-w-[1000px] m-auto opacity-20 md:opacity-50"
+          ></img>
+
+          <div className="w-full max-w-3xl m-auto grid md:grid-cols-2 px-6 relative z-20 pt-20 md:pt-0">
+            <div>
+              <h1 className="font-thin text-main nunito text-3xl leading-none mb-3">
+                Atividades <span className="font-bold">complementares</span>
+              </h1>
+
+              <div className="space-y-2">
+                <p className="font-light text-xs">
+                  Quando conheci o desenvolvimento front-end há mais de 12 anos
+                  atrás, foi um choque. Já naquela época queria ter algo meu
+                  mesmo não tendo muito conhecimento. As tecnologias na época
+                  estavam muito longe do que a gente vive hoje. Agora com a
+                  expertise adquirida ao longo dos anos e os benefícios do
+                  modelo remoto, consigo dedicar tempo ao meu crescimento
+                  pessoal e profissional.
+                </p>
+
+                <p className="font-light text-xs">
+                  A programação é uma das poucas profissões onde temos o
+                  privilégio de tirar idéias do papel e trazer para o mundo
+                  físico. Particularmente eu já tentei algumas vezes, mas hoje
+                  tenho um carinho especial por um projeto que criei para
+                  agregar valor á imagem de atletas e profissionais do segmento
+                  esportivo na minha região, contribuindo e promovendo não só a
+                  prática de esporte mas como saúde, lazer e bem estar na
+                  comunidade em que vivo mesmo ainda não tendo retorno
+                  financeiro sobre isso.
+                </p>
+
+                <p className="font-light text-xs">
+                  Falando em remoto e saúde, como mencionei antes, hoje tento
+                  dar prioriedade para vagas que eu consiga unir esses dois, mas
+                  nem sempre foi assim. Já atuei no modelo presencial em
+                  Alphaville e só a ida/volta consumia pelo menos 4 horas do meu
+                  dia em dias normais. Já sofri com hérnia de disco, á ponto de
+                  trabalhar deitado durante meses e aí então ter que me afastar
+                  para operar.
+                </p>
+
+                <p className="font-light text-xs">
+                  O fato de dar <b className="font-bold">prioridade</b> para
+                  vagas com esse modelo não é uma questão de preguiça, comodismo
+                  ou coisa parecida. É uma escolha. Esqueça o estereótipo de
+                  programador, gordinho, barbudo e que não vê a luz do sol,
+                  inclusive, já vivi isso. Hoje, dou valor para minha saúde
+                  física e mental. Crescimento pessoal e profissional. Não quero
+                  só dar o meu melhor na minha posição mas quero fazer a
+                  diferença na região onde vivo, pois é onde estou a maior parte
+                  do tempo.
+                </p>
+              </div>
+
+              <div className="my-6">
+                <a
+                  href="https://esportesnabaixadasantista.com.br/"
+                  target="_blank"
+                >
+                  <Button className="bg-main/10 text-main shadow-none text-xs font-normal rounded-full cursor-pointer hover:bg-main hover:text-white">
+                    Conhecer projeto <ExternalLink strokeWidth={1.8} />
+                  </Button>
+                </a>
+              </div>
+
+              <div className="hidden md:block pb-12">
+                <p className="font-thin text-sm neutral-600">
+                  &copy; 2025 - Felipe Baptistella Vieira.
+                </p>
+
+                <Button
+                  onClick={() => scrollTo("let-me-introduce-myself")}
+                  className="text-main text-[11px] font-normal underline cursor-pointer hover:text-main-dark p-0! m-0 min-h-0 h-auto float-right"
+                  variant={"link"}
+                >
+                  Voltar para o topo <ChevronUp className="-ml-1" />
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
