@@ -320,22 +320,22 @@ function App() {
 
       {/* APRESENTAÇÃO */}
       <section
-        className="w-full py-10 bg-dom-sim-gray-28 pb-[150px]"
+        className="w-full py-10 bg-dom-sim-gray-28 pb-[100px] md:pb-[150px]"
         id="let-me-introduce-myself"
       >
         <div className="w-full flex justify-center m-auto gap-6">
-          <div className="text-left">
+          <div className="text-center md:text-left">
             <h1 className="text-xl sm:text-2xl md:text-4xl text-white nunito font-thin">
               Permita-me <b className="font-bold ">apresentar</b>.
             </h1>
 
-            <p className="text-neutral-400 font-thin text-xs md:text-sm">
+            <p className="text-neutral-400 font-thin text-xs md:text-sm flex flex-col md:block">
               mas se você estiver com pressa{" "}
               <Dialog>
                 <DialogTrigger>
                   <Button
                     variant={"link"}
-                    className="h-auto min-h-0 px-0! ml-1 md:ml-[0.7px] w-auto min-w-0 font-normal text-xs md:text-[14px] bg-transparent rounded-full cursor-pointer hover:bg-transparent hover:text-main-dark text-main underline"
+                    className="mt-2  md:mt-0 h-auto min-h-0 px-0! ml-1 md:ml-[0.7px] w-auto min-w-0 font-normal text-xs md:text-[14px] bg-transparent rounded-full cursor-pointer hover:bg-transparent hover:text-main-dark text-main underline"
                     size="sm"
                   >
                     faça download do curriculo <Download />
